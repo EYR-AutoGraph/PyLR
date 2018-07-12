@@ -21,7 +21,6 @@ Content
 
    status
    architecture
-   cake
    modules
 
 
