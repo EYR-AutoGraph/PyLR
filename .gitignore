@@ -38,5 +38,7 @@ coverage-traffic-reports
 *nosetests.xml
 *coverage.xml
 
-
+# temporary back up files from 2to3
+*.py.bak
+*~
 

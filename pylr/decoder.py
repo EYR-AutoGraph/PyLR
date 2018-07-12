@@ -10,8 +10,8 @@
 from __future__ import print_function
 
 from collections import namedtuple
-from itertools import ifilter, groupby, chain
-import rating as Rating
+from itertools import groupby, chain
+from . import rating as Rating
 from .constants import (LocationType,
                         WITH_LINE_DIRECTION,
                         AGAINST_LINE_DIRECTION,
@@ -138,6 +138,13 @@ class RouteConstructionFailed(RouteSearchException):
 # ----------------
 # Map database
 # ----------------
+
+def rating_key(pair):
+    return pair[1]
+
+
+def group_key(pair):
+    return pair[0].id
 
 
 class MapDatabase(object):
@@ -389,9 +396,6 @@ class ClassicDecoder(DecoderBase, RatingCalculator):
         rating_f = self.rating
         min_acc = self._min_acc_rating
 
-        rating_key = lambda (l, r): r
-        group_key = lambda (l, r): l.id
-
         candidates = ((l, rating_f(lrp, l, n.distance)) for n in nodes for l in self._mdb.connected_lines(
             n, frc_max=frc_max, beardir=beardir))
         if self.find_lines_directly:
@@ -400,7 +404,8 @@ class ClassicDecoder(DecoderBase, RatingCalculator):
             candidates = (max(vals, key=rating_key) for k, vals in groupby(
                 sorted(candidates, key=group_key), key=group_key))
         if not with_details:
-            candidates = ifilter(lambda (l, r): r >= min_acc, candidates)
+            candidates = filter(
+                lambda pair: rating_key(pair) >= min_acc, candidates)
         lines = sorted(candidates, key=rating_key, reverse=True)
         if not with_details and not lines:
             raise DecoderNoCandidateLines("No candidate lines found....")
@@ -467,11 +472,13 @@ class ClassicDecoder(DecoderBase, RatingCalculator):
             lrpnext, nextlines = candidates[i+1]
             islastrp = lrpnext is lastlrp
             pairs = sorted(calculate_pairs(lines, nextlines, lastline,
-                           islastrp, islinelocation), key=lambda (p, r): r, reverse=True)
+                           islastrp, islinelocation), key=rating_key,
+                           reverse=True)
             # check candidate pairs
             for (l1, l2), _ in pairs[:nr_retry]:
                 if self.verbose:
-                    self.logger("openlr: computing route ({},{})".format(l1.id, l2.id))
+                    self.logger("openlr: computing route ({},{})".format(
+                        l1.id, l2.id))
                 # handle same start/end.
                 if l1.id == l2.id:
                     if islastrp:
@@ -487,7 +494,7 @@ class ClassicDecoder(DecoderBase, RatingCalculator):
                     if lastline is not None and lastline.id != l1.id:
                         self._handle_start_change(routes, l1, lrp, prevlrp)
                     break  # search finished
-                except RouteNotFoundException, RouteConstructionFailed:
+                except (RouteNotFoundException, RouteConstructionFailed):
                     # Let a chance to retry
                     route = None
 
