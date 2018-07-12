@@ -21,13 +21,8 @@ Content
 
    status
    architecture
-   pylr
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
+   cake
+   modules
 
 
 Indices and tables

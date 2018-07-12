@@ -1,5 +1,5 @@
-pylr.tests package
-==================
+test
+====
 
 Subpackages
 -----------
@@ -11,10 +11,10 @@ Subpackages
 Submodules
 ----------
 
-pylr.tests.data module
+test.data module
 ----------------------
 
-.. automodule:: pylr.tests.data
+.. automodule:: test.data
     :members:
     :undoc-members:
     :show-inheritance:
@@ -23,7 +23,7 @@ pylr.tests.data module
 Module contents
 ---------------
 
-.. automodule:: pylr.tests
+.. automodule:: test
     :members:
     :undoc-members:
     :show-inheritance:

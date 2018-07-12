@@ -69,7 +69,8 @@ Line = namedtuple('Line', MapDatabase.Line._fields+('start', 'end', 'bearin', 'b
 
 gall_proj = pyproj.Proj("+init=esri:54016")
 
-distance = lambda (x1, y1), (x2, y2): sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1))
+def distance(a, b):
+    return sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2)
 
 
 # Define a fake database

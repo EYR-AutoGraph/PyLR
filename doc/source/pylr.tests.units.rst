@@ -7,7 +7,7 @@ Submodules
 pylr.tests.units.test_binary_parser module
 ------------------------------------------
 
-.. automodule:: pylr.tests.units.test_binary_parser
+.. automodule:: test.units.test_binary_parser
     :members:
     :undoc-members:
     :show-inheritance:
@@ -15,7 +15,7 @@ pylr.tests.units.test_binary_parser module
 pylr.tests.units.test_decoder module
 ------------------------------------
 
-.. automodule:: pylr.tests.units.test_decoder
+.. automodule:: test.units.test_decoder
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,7 +24,7 @@ pylr.tests.units.test_decoder module
 Module contents
 ---------------
 
-.. automodule:: pylr.tests.units
+.. automodule:: test.units
     :members:
     :undoc-members:
     :show-inheritance:

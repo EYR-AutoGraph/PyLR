@@ -12,7 +12,7 @@ import sys
 try:
     from unittest import TestCase
     from pylr import init_binary_parsing, parse_binary
-    from pylr.tests.data import LOCATIONS
+    from ..data import LOCATIONS
 except:
     import traceback
     traceback.print_exc()
