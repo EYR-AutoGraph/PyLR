@@ -42,3 +42,5 @@ coverage-traffic-reports
 *.py.bak
 *~
 
+# pytest cache
+.pytest_cache

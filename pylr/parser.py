@@ -7,6 +7,8 @@
 
 from collections import namedtuple
 from bitstring import BitStream
+import base64 as b64
+
 from .utils import lazyproperty
 from .constants import (LATEST_BINARY_VERSION,
                         BINARY_VERSION_2,
@@ -86,7 +88,7 @@ class _RawBinaryData(object):
             :param bool base64: True if data is coded in base64
         """
         if base64:
-            data = data.decode("base64")
+            data = b64.b64decode(data)
         
         #: raw data size
         self._sz = len(data)
@@ -290,7 +292,7 @@ def parse_line(rb):
     assert rb.location_type == LocationType.LINE_LOCATION
 
     # number of intermediates points
-    num_intermediates = (rb.num_bytes - MIN_BYTES_LINE_LOCATION) / LRP_SIZE
+    num_intermediates = (rb.num_bytes - MIN_BYTES_LINE_LOCATION) // LRP_SIZE
     flrp = _parse_first_lrp(rb)
 
     points = []
