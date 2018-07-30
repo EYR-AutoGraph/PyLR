@@ -10,27 +10,58 @@ from .values import (coordinates_values,
                      rel_coordinates_values,
                      distance_estimate,
                      relative_distance)
-
 from .constants import (BINARY_VERSION_2, BINARY_VERSION_3)
 
-# lon (float) : longitude (in degrees)
-# lat (float) : latituded (in degrees)
-Coords = namedtuple('Coords',  ('lon', 'lat'))
-"""Coordinates, expressed as a pair of float values (in degrees)."""
 
-# coords (Coords) : Coordinates
-# bear : bearing ; expressed as a sector number describing a bearing range
-# orient : orientation, expressed as a bit field
-# frc : functionnal road class, expressed as a bit field
-# fow : form of way, expressed as a bit field
-# lfrcnp : lowest FRC to next point, expressed as a bit field
-# dnp : distance to next LR-point, expressed in meters
-LocationReferencePoint = namedtuple('LocationReferencePoint',  (
-    'coords', 'bear', 'orient', 'frc', 'fow',  'lfrcnp', 'dnp'))
-"Location Reference Point. Used to define several kinds of lcoation (lines, ...)"
+Coords = namedtuple('Coords',  ('lon', 'lat'))
+"""Coordinates, expressed as a pair of float values (in degrees).
+
+.. py:attribute:: lon
+
+    Longitude (in degrees)
+
+.. py:attribute::lat
+
+    Latitude (in degrees)
+"""
+
+LocationReferencePoint = namedtuple(
+    'LocationReferencePoint',
+    ('coords', 'bear', 'orient', 'frc', 'fow',  'lfrcnp', 'dnp'))
+"""Location Reference Point. Used to define several kinds of
+lcoation (lines, ...)
+
+.. py:attribute:: coords
+
+    Coordinates
+
+.. py:attribute:: bear
+
+    Bearing, expressed as a sector number describing a bearing range
+
+.. py:attribute:: orient
+
+    Orientation, expressed as a bit field
+
+.. py:attribute:: frc
+
+    Functional Road Class, expressed as a bit field
+
+.. py:attribute:: fow
+
+    Form Of Way, expressed as a bit field
+
+.. py:attribute:: lfrcnp
+
+    Lowest FRC to next point, expressed as a bit field
+
+.. py:attribute:: dnp
+
+    Distance to next LR-point, expressed in meters
+"""
 
 RADIUS_BITS = ('uint:8', 'uint:16', 'uint:24', 'uint:32')
-""" Number of bits needed to code the radius for a circle location reference.
+"""Number of bits needed to code the radius for a circle location reference.
 """
 
 # Bit fields used to read physical data
@@ -141,6 +172,7 @@ def _parse_coordinates(rb, bits, rel):
     else:
         lon, lat = coordinates_values(lon, lat)
     return Coords(lon, lat)
+
 
 def _parse_relative_coordinates(rb, rel):
     ''' Parse the raw binary data bits to read relative coordinates.

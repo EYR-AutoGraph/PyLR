@@ -168,7 +168,9 @@ class MapDatabase(object):
            The distance from the search location
     """
  
-    Line = namedtuple('Line', ('id', 'bear', 'frc', 'fow', 'len', 'projected_len'))
+    Line = namedtuple(
+        'Line',
+        ('id', 'bear', 'frc', 'fow', 'len', 'projected_len'))
     """
         .. attribute:: id
         
@@ -507,8 +509,8 @@ class ClassicDecoder(DecoderBase, RatingCalculator):
             if self.verbose:
                 # Display route
                 lines, length = route
-                self.logger("openlr: resolved route ({},{}):{} length={}".format(
-                    l1.id, l2.id, tuple(l.id for l in lines), length))
+                self.logger("openlr: resolved route ({},{}):{} length={}" \
+                    .format(l1.id, l2.id, tuple(l.id for l in lines), length))
 
             prevlrp, lastline = lrp, l2
 
@@ -519,7 +521,8 @@ class ClassicDecoder(DecoderBase, RatingCalculator):
         """
         lstart, _ = routes[-1][0]
         if self.verbose:
-            self.logger("openlr: recomputing last route between {} and {}".format(lstart.id, lend.id))
+            self.logger("openlr: recomputing last route between {} and {}" \
+                .format(lstart.id, lend.id))
         route = self._calculate_route(lstart, lend, prevlrp, islastrp=False)
         routes = routes[:-1] + (route, )
 
